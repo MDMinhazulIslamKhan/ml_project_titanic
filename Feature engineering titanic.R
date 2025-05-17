@@ -9,10 +9,6 @@ test <- read.csv("D:/personal/data science/datasets/titanic/titanic/test.csv")
 test$Survived <- NA
 combined_set <- rbind(train, test)
 
-
-# Convert to a string
-combined_set$Name <- as.character(combined_set$Name)
-
 # Creating new variable Child and Adult
 combined_set$Child[combined_set$Age < 14] <- 'Child'
 combined_set$Child[combined_set$Age >= 14] <- 'Adult'
@@ -20,8 +16,6 @@ combined_set$Child[combined_set$Age >= 14] <- 'Adult'
 # Show counts
 table(combined_set$Child)
 table(combined_set$Child, combined_set$Survived)
-
-# Convert to a factor
 combined_set$Child <- factor(combined_set$Child) # R models perform better with categorical variables as factors — not as numbers or characters.
 
 # Convert to a string
@@ -55,8 +49,6 @@ combined_set$Title <- factor(combined_set$Title)
 # Adding Mother variable
 combined_set$Mother <- 'Not Mother'
 combined_set$Mother[combined_set$Sex == 'female' & combined_set$Parch > 0 & combined_set$Age > 18 & combined_set$Title != 'Miss'] <- 'Mother'
-
-# Convert to a factor
 combined_set$Mother <- factor(combined_set$Mother)
 
 # Show counts
@@ -202,9 +194,9 @@ write.csv(submit, file = "prediction5.csv", row.names = FALSE)
 summary(combined_set$Age)
 
 FillAge <- rpart(Age ~ Pclass + Mother + FamilySize + Sex + SibSp + Parch + Deck + Fare + Embarked + Title + FamilyID + FamilySizeGroup + FamilySize, 
-                 data=combined_set[!is.na(combined_set$Age),], method="anova")
+                 data=combined_set[!is.na(combined_set$Age),], method="anova") # anova used for numeric outcome prediction like Age
 
-combined_set$Age[is.na(combined_set$Age)] <- predict(FillAge, combined_set[is.na(combined_set$Age),]) # anova used for numeric outcome prediction like Age
+combined_set$Age[is.na(combined_set$Age)] <- predict(FillAge, combined_set[is.na(combined_set$Age),])
 summary(combined_set$Age)
 
 png("image/9-fe.png", width = 1200, height = 900)
@@ -213,6 +205,7 @@ dev.off()
 
 # Fill in Embarked blanks
 summary(combined_set$Embarked)
+table(combined_set$Embarked)
 which(combined_set$Embarked == '') # get the position of ''
 combined_set$Embarked[c(62,830)] = "S" # add 'S' in 62 and 830 no column
 combined_set$Embarked <- factor(combined_set$Embarked)
