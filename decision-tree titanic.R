@@ -16,14 +16,14 @@ library(rpart.plot)
 library(RColorBrewer)
 
 mytree1 <- rpart(Survived ~ Sex, data=train, method="class")
-fancyRpartPlot(mytree1)
+fancyRpartPlot(mytree1, caption = "Survival by Sex – Decision Tree")
 
 # 
 round(prop.table(table(train$Survived)),2)
 round(prop.table(table(train$Sex, train$Survived),margin = 1),2)
 
 model <- rpart(Survived ~ Pclass + Age, data=train, method="class")
-fancyRpartPlot(model)
+fancyRpartPlot(model, caption = "Survival Based on Pclass and Age  – Decision Tree")
 rpart.plot(model)
 
 
@@ -34,16 +34,16 @@ text(model, digits = 3)
 
 # gender model
 mytree1 <- rpart(Survived ~ Sex, data=train, method="class")
-fancyRpartPlot(mytree1)
+fancyRpartPlot(mytree1, caption = "Survival by Sex – Decision Tree")
 
 # Passenger class + Age model
 mytree2 <- rpart(Survived ~ Pclass + Age, data=train, method="class")
-fancyRpartPlot(mytree2)
+fancyRpartPlot(mytree2, caption = "Survival Based on Pclass and Age  – Decision Tree")
 
 # deeper
 mytree3 <- rpart(Survived ~ Pclass + Sex + Age + SibSp + Parch + 
                    Fare + Embarked, data=train, method="class")
-fancyRpartPlot(mytree3)
+fancyRpartPlot(mytree3, caption = "Titanic Survival Prediction – Full Feature Decision Tree")
 
 plot(mytree3)
 text(mytree3)
