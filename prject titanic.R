@@ -118,6 +118,7 @@ barplot(table(train$Embarked), names.arg = c("Cherbourg", "Queenstown", "Southam
   
 
 # Histogram plot:
+# If Age is a factor or character, convert to numeric ==> train$Age <- as.numeric(as.character(train$Age))
 hist(train$Age, main="Age", xlab = NULL, col="brown") # Age distribution in the Titanic
 # What was the fair most people paid for Titanic?
 hist(train$Fare, main="Fare (fee paid for ticket[s])", xlab = NULL, col="darkgreen")
